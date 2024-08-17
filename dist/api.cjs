@@ -2,9 +2,9 @@
 
 
 
-var _chunkO6TQW4ZTcjs = require('./chunk-O6TQW4ZT.cjs');
+var _chunkXNR46HY6cjs = require('./chunk-XNR46HY6.cjs');
 
 
 
 
-exports.defineMacro = _chunkO6TQW4ZTcjs.defineMacro; exports.resolveOptions = _chunkO6TQW4ZTcjs.resolveOptions; exports.transformMacros = _chunkO6TQW4ZTcjs.transformMacros;
+exports.defineMacro = _chunkXNR46HY6cjs.defineMacro; exports.resolveOptions = _chunkXNR46HY6cjs.resolveOptions; exports.transformMacros = _chunkXNR46HY6cjs.transformMacros;

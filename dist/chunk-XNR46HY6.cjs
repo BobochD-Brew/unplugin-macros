@@ -78,16 +78,17 @@ async function transformMacros({
       if (!exported) {
         throw new Error(`Macro ${local} is not existed.`);
       }
+      const ctx = {
+        id,
+        source,
+        emitFile: unpluginContext.emitFile,
+        ast: program,
+        node,
+        unpluginContext,
+        skipOverwrite: false
+      };
       let ret;
       if (macro.type === "call") {
-        const ctx = {
-          id,
-          source,
-          emitFile: unpluginContext.emitFile,
-          ast: program,
-          node,
-          unpluginContext
-        };
         ret = exported.apply(ctx, macro.args);
       } else {
         ret = exported;
@@ -96,6 +97,8 @@ async function transformMacros({
         ret = await ret;
       }
       switch (true) {
+        case ctx.skipOverwrite:
+          break;
         case ret instanceof String:
           s.overwriteNode(node, ret.toString());
           break;
