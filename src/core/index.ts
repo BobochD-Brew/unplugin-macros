@@ -1,6 +1,7 @@
 import { builtinModules } from 'node:module'
 import {
   type ImportBinding,
+  ParseResult,
   TS_NODE_TYPES,
   type WithScope,
   attachScopes,
@@ -17,7 +18,7 @@ import {
 } from 'ast-kit'
 import { MagicStringAST, generateTransform } from 'magic-string-ast'
 import type { UnpluginBuildContext, UnpluginContext } from 'unplugin'
-import type { ImportAttribute, Node } from '@babel/types'
+import type { ImportAttribute, Node, Program } from '@babel/types'
 import type { ViteNodeRunner } from 'vite-node/client'
 
 export * from './options'
@@ -30,6 +31,8 @@ export interface MacroContext {
   id: string
   source: string
   emitFile: UnpluginBuildContext['emitFile']
+  ast: ParseResult<Program>
+  node: Node
   /**
    * **Use with caution.**
    *
@@ -128,7 +131,8 @@ export async function transformMacros({
           id,
           source,
           emitFile: unpluginContext.emitFile,
-
+          ast: program,
+          node: node,
           unpluginContext,
         }
         ret = (exported as Function).apply(ctx, macro.args)
