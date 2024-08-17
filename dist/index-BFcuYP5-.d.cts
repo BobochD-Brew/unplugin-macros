@@ -1,6 +1,7 @@
 import { ViteDevServer, InlineConfig } from 'vite';
 import { FilterPattern } from '@rollup/pluginutils';
 import { ParseResult } from 'ast-kit';
+import { MagicStringAST } from 'magic-string-ast';
 import { UnpluginBuildContext, UnpluginContext } from 'unplugin';
 import { Program, Node } from '@babel/types';
 import { ViteNodeRunner } from 'vite-node/client';
@@ -67,6 +68,7 @@ interface MacroContext {
     emitFile: UnpluginBuildContext['emitFile'];
     ast: ParseResult<Program>;
     node: Node;
+    magicString: MagicStringAST;
     skipOverwrite: boolean;
     /**
      * **Use with caution.**

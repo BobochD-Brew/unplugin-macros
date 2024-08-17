@@ -1,8 +1,9 @@
-import { M as MacroContext } from './index-B_CvgDsz.js';
-export { O as Options, a as OptionsResolved, r as resolveOptions, t as transformMacros } from './index-B_CvgDsz.js';
+import { M as MacroContext } from './index-BFcuYP5-.js';
+export { O as Options, a as OptionsResolved, r as resolveOptions, t as transformMacros } from './index-BFcuYP5-.js';
 import 'vite';
 import '@rollup/pluginutils';
 import 'ast-kit';
+import 'magic-string-ast';
 import 'unplugin';
 import '@babel/types';
 import 'vite-node/client';

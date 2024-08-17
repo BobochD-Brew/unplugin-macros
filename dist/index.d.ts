@@ -1,9 +1,10 @@
 import { UnpluginInstance } from 'unplugin';
-import { O as Options } from './index-B_CvgDsz.js';
-export { M as MacroContext } from './index-B_CvgDsz.js';
+import { O as Options } from './index-BFcuYP5-.js';
+export { M as MacroContext } from './index-BFcuYP5-.js';
 import 'vite';
 import '@rollup/pluginutils';
 import 'ast-kit';
+import 'magic-string-ast';
 import '@babel/types';
 import 'vite-node/client';
 

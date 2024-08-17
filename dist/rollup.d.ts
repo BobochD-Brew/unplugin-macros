@@ -1,9 +1,10 @@
 import plugin from './index.js';
 import 'unplugin';
-import './index-B_CvgDsz.js';
+import './index-BFcuYP5-.js';
 import 'vite';
 import '@rollup/pluginutils';
 import 'ast-kit';
+import 'magic-string-ast';
 import '@babel/types';
 import 'vite-node/client';
 

@@ -1,4 +1,4 @@
-// src/core/options.ts
+"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { newObj[key] = obj[key]; } } } newObj.default = obj; return newObj; } } function _optionalChain(ops) { let lastAccessLHS = undefined; let value = ops[0]; let i = 1; while (i < ops.length) { const op = ops[i]; const fn = ops[i + 1]; i += 2; if ((op === 'optionalAccess' || op === 'optionalCall') && value == null) { return undefined; } if (op === 'access' || op === 'optionalAccess') { lastAccessLHS = value; value = fn(value); } else if (op === 'call' || op === 'optionalCall') { value = fn((...args) => value.call(lastAccessLHS, ...args)); lastAccessLHS = undefined; } } return value; }// src/core/options.ts
 function resolveOptions(options) {
   return {
     include: options.include || [/\.[cm]?[jt]sx?$/],
@@ -16,22 +16,22 @@ function defineMacro(fn) {
 }
 
 // src/core/index.ts
-import { builtinModules } from "node:module";
-import {
-  TS_NODE_TYPES,
-  attachScopes,
-  babelParse,
-  getLang,
-  isLiteralType,
-  isReferenced,
-  isTypeOf,
-  resolveIdentifier,
-  resolveLiteral,
-  resolveObjectKey,
-  walkAST,
-  walkImportDeclaration
-} from "ast-kit";
-import { MagicStringAST, generateTransform } from "magic-string-ast";
+var _module = require('module');
+
+
+
+
+
+
+
+
+
+
+
+
+
+var _astkit = require('ast-kit');
+var _magicstringast = require('magic-string-ast');
 async function transformMacros({
   source,
   id,
@@ -40,10 +40,10 @@ async function transformMacros({
   deps,
   attrs
 }) {
-  const program = babelParse(source, getLang(id), {
+  const program = _astkit.babelParse.call(void 0, source, _astkit.getLang.call(void 0, id), {
     plugins: [["importAttributes", { deprecatedAssertSyntax: true }]]
   });
-  const s = new MagicStringAST(source);
+  const s = new (0, _magicstringast.MagicStringAST)(source);
   const imports = new Map(Object.entries(recordImports()));
   const macros = collectMacros();
   if (macros.length > 0) {
@@ -51,7 +51,7 @@ async function transformMacros({
   } else {
     deps.delete(id);
   }
-  return generateTransform(s, id);
+  return _magicstringast.generateTransform.call(void 0, s, id);
   async function executeMacros() {
     const runner = await getRunner();
     deps.set(id, /* @__PURE__ */ new Set());
@@ -64,8 +64,8 @@ async function transformMacros({
       const binding = imports.get(local);
       const [, resolved] = await runner.resolveUrl(binding.source, id);
       let exported;
-      if (resolved.startsWith("node:") || builtinModules.includes(resolved.split("/")[0])) {
-        exported = await import(resolved);
+      if (resolved.startsWith("node:") || _module.builtinModules.includes(resolved.split("/")[0])) {
+        exported = await Promise.resolve().then(() => _interopRequireWildcard(require(resolved)));
       } else {
         const module = await runner.executeFile(resolved);
         exported = module;
@@ -73,7 +73,7 @@ async function transformMacros({
       const props = [...keys];
       if (binding.imported !== "*") props.unshift(binding.imported);
       for (const key of props) {
-        exported = exported?.[key];
+        exported = _optionalChain([exported, 'optionalAccess', _ => _[key]]);
       }
       if (!exported) {
         throw new Error(`Macro ${local} is not existed.`);
@@ -84,6 +84,7 @@ async function transformMacros({
         emitFile: unpluginContext.emitFile,
         ast: program,
         node,
+        magicString: s,
         unpluginContext,
         skipOverwrite: false
       };
@@ -114,17 +115,17 @@ async function transformMacros({
   }
   function collectMacros() {
     const macros2 = [];
-    let scope = attachScopes(program, "scope");
+    let scope = _astkit.attachScopes.call(void 0, program, "scope");
     const parentStack = [];
-    walkAST(program, {
+    _astkit.walkAST.call(void 0, program, {
       enter(node, parent) {
         parent && parentStack.push(parent);
         if (node.scope) scope = node.scope;
-        if (node.type.startsWith("TS") && !TS_NODE_TYPES.includes(node.type)) {
+        if (node.type.startsWith("TS") && !_astkit.TS_NODE_TYPES.includes(node.type)) {
           this.skip();
           return;
         }
-        const isAwait = parent?.type === "AwaitExpression";
+        const isAwait = _optionalChain([parent, 'optionalAccess', _2 => _2.type]) === "AwaitExpression";
         if (node.type === "TaggedTemplateExpression") {
           node = {
             ...node,
@@ -133,22 +134,22 @@ async function transformMacros({
             arguments: [node.quasi]
           };
         }
-        if (node.type === "CallExpression" && isTypeOf(node.callee, ["Identifier", "MemberExpression"])) {
+        if (node.type === "CallExpression" && _astkit.isTypeOf.call(void 0, node.callee, ["Identifier", "MemberExpression"])) {
           let id2;
           try {
-            id2 = resolveIdentifier(node.callee);
-          } catch {
+            id2 = _astkit.resolveIdentifier.call(void 0, node.callee);
+          } catch (e) {
             return;
           }
           if (!imports.has(id2[0]) || scope.contains(id2[0])) return;
           const args = node.arguments.map((arg) => {
-            if (isLiteralType(arg)) return resolveLiteral(arg);
+            if (_astkit.isLiteralType.call(void 0, arg)) return _astkit.resolveLiteral.call(void 0, arg);
             try {
-              if (isTypeOf(arg, ["ObjectExpression", "ArrayExpression"]))
+              if (_astkit.isTypeOf.call(void 0, arg, ["ObjectExpression", "ArrayExpression"]))
                 return new Function(
                   `return (${source.slice(arg.start, arg.end)})`
                 )();
-            } catch {
+            } catch (e2) {
             }
             throw new Error("Macro arguments cannot be resolved.");
           });
@@ -160,11 +161,11 @@ async function transformMacros({
             isAwait
           });
           this.skip();
-        } else if (isTypeOf(node, ["Identifier", "MemberExpression"]) && (!parent || isReferenced(node, parent, parentStack.at(-2)))) {
+        } else if (_astkit.isTypeOf.call(void 0, node, ["Identifier", "MemberExpression"]) && (!parent || _astkit.isReferenced.call(void 0, node, parent, parentStack.at(-2)))) {
           let id2;
           try {
-            id2 = resolveIdentifier(node);
-          } catch {
+            id2 = _astkit.resolveIdentifier.call(void 0, node);
+          } catch (e3) {
             return;
           }
           if (!imports.has(id2[0]) || scope.contains(id2[0])) return;
@@ -189,7 +190,7 @@ async function transformMacros({
     for (const node of program.body) {
       if (node.type === "ImportDeclaration" && node.importKind !== "type" && node.attributes && checkImportAttributes(attrs, node.attributes)) {
         s.removeNode(node);
-        walkImportDeclaration(imports2, node);
+        _astkit.walkImportDeclaration.call(void 0, imports2, node);
       }
     }
     return imports2;
@@ -197,15 +198,15 @@ async function transformMacros({
 }
 function checkImportAttributes(expected, actual) {
   const actualAttrs = Object.fromEntries(
-    actual.map((attr) => [resolveObjectKey(attr), attr.value.value])
+    actual.map((attr) => [_astkit.resolveObjectKey.call(void 0, attr), attr.value.value])
   );
   return Object.entries(expected).every(
     ([key, expectedValue]) => actualAttrs[key] === expectedValue
   );
 }
 
-export {
-  resolveOptions,
-  defineMacro,
-  transformMacros
-};
+
+
+
+
+exports.resolveOptions = resolveOptions; exports.defineMacro = defineMacro; exports.transformMacros = transformMacros;
