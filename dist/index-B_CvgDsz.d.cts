@@ -67,6 +67,7 @@ interface MacroContext {
     emitFile: UnpluginBuildContext['emitFile'];
     ast: ParseResult<Program>;
     node: Node;
+    skipOverwrite: boolean;
     /**
      * **Use with caution.**
      *

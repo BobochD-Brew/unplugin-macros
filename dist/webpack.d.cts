@@ -1,6 +1,6 @@
 import plugin from './index.cjs';
 import 'unplugin';
-import './index-Ju27Nud0.cjs';
+import './index-B_CvgDsz.cjs';
 import 'vite';
 import '@rollup/pluginutils';
 import 'ast-kit';

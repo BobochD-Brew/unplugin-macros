@@ -1,6 +1,6 @@
 import { UnpluginInstance } from 'unplugin';
-import { O as Options } from './index-Ju27Nud0.cjs';
-export { M as MacroContext } from './index-Ju27Nud0.cjs';
+import { O as Options } from './index-B_CvgDsz.cjs';
+export { M as MacroContext } from './index-B_CvgDsz.cjs';
 import 'vite';
 import '@rollup/pluginutils';
 import 'ast-kit';

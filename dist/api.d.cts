@@ -1,5 +1,5 @@
-import { M as MacroContext } from './index-Ju27Nud0.cjs';
-export { O as Options, a as OptionsResolved, r as resolveOptions, t as transformMacros } from './index-Ju27Nud0.cjs';
+import { M as MacroContext } from './index-B_CvgDsz.cjs';
+export { O as Options, a as OptionsResolved, r as resolveOptions, t as transformMacros } from './index-B_CvgDsz.cjs';
 import 'vite';
 import '@rollup/pluginutils';
 import 'ast-kit';
