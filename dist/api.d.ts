@@ -1,8 +1,10 @@
-import { M as MacroContext } from './index-DBCBOn9w.js';
-export { O as Options, a as OptionsResolved, r as resolveOptions, t as transformMacros } from './index-DBCBOn9w.js';
+import { M as MacroContext } from './index-Ju27Nud0.js';
+export { O as Options, a as OptionsResolved, r as resolveOptions, t as transformMacros } from './index-Ju27Nud0.js';
 import 'vite';
 import '@rollup/pluginutils';
+import 'ast-kit';
 import 'unplugin';
+import '@babel/types';
 import 'vite-node/client';
 
 /**

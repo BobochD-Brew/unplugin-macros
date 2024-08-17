@@ -1,8 +1,10 @@
 import { UnpluginInstance } from 'unplugin';
-import { O as Options } from './index-DBCBOn9w.js';
-export { M as MacroContext } from './index-DBCBOn9w.js';
+import { O as Options } from './index-Ju27Nud0.js';
+export { M as MacroContext } from './index-Ju27Nud0.js';
 import 'vite';
 import '@rollup/pluginutils';
+import 'ast-kit';
+import '@babel/types';
 import 'vite-node/client';
 
 /**

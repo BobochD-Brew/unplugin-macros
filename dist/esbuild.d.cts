@@ -1,8 +1,10 @@
 import plugin from './index.cjs';
 import 'unplugin';
-import './index-DBCBOn9w.cjs';
+import './index-Ju27Nud0.cjs';
 import 'vite';
 import '@rollup/pluginutils';
+import 'ast-kit';
+import '@babel/types';
 import 'vite-node/client';
 
 /**
