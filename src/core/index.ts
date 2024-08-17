@@ -140,10 +140,11 @@ export async function transformMacros({
         ret = await ret
       }
 
-      s.overwriteNode(
-        node,
-        ret === undefined ? 'undefined' : JSON.stringify(ret),
-      )
+      switch (true) {
+        case ret instanceof String: s.overwriteNode(node, ret.toString()); break;
+        case Boolean(ret): s.overwriteNode(node, JSON.stringify(ret)); break;
+        default: s.overwriteNode(node, 'undefined'); break;
+      }
 
       deps.get(id)!.add(resolved)
     }
