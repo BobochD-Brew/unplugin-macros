@@ -33,6 +33,7 @@ export interface MacroContext {
   emitFile: UnpluginBuildContext['emitFile']
   ast: ParseResult<Program>
   node: Node
+  skipOverwrite: boolean
   /**
    * **Use with caution.**
    *
@@ -125,16 +126,17 @@ export async function transformMacros({
         throw new Error(`Macro ${local} is not existed.`)
       }
 
+      const ctx: MacroContext = {
+        id,
+        source,
+        emitFile: unpluginContext.emitFile,
+        ast: program,
+        node: node,
+        unpluginContext,
+        skipOverwrite: false,
+      }
       let ret: any
       if (macro.type === 'call') {
-        const ctx: MacroContext = {
-          id,
-          source,
-          emitFile: unpluginContext.emitFile,
-          ast: program,
-          node: node,
-          unpluginContext,
-        }
         ret = (exported as Function).apply(ctx, macro.args)
       } else {
         ret = exported
@@ -145,6 +147,7 @@ export async function transformMacros({
       }
 
       switch (true) {
+        case ctx.skipOverwrite: break;
         case ret instanceof String: s.overwriteNode(node, ret.toString()); break;
         case Boolean(ret): s.overwriteNode(node, JSON.stringify(ret)); break;
         default: s.overwriteNode(node, 'undefined'); break;
