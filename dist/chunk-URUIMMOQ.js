@@ -1,7 +1,7 @@
 import {
   resolveOptions,
   transformMacros
-} from "./chunk-FUBSUPYY.js";
+} from "./chunk-QQFSVHYB.js";
 
 // src/index.ts
 import { createUnplugin } from "unplugin";

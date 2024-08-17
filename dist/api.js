@@ -2,7 +2,7 @@ import {
   defineMacro,
   resolveOptions,
   transformMacros
-} from "./chunk-FUBSUPYY.js";
+} from "./chunk-QQFSVHYB.js";
 export {
   defineMacro,
   resolveOptions,
