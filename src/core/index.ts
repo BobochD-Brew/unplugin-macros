@@ -33,6 +33,7 @@ export interface MacroContext {
   emitFile: UnpluginBuildContext['emitFile']
   ast: ParseResult<Program>
   node: Node
+  magicString: MagicStringAST,
   skipOverwrite: boolean
   /**
    * **Use with caution.**
@@ -132,6 +133,7 @@ export async function transformMacros({
         emitFile: unpluginContext.emitFile,
         ast: program,
         node: node,
+        magicString: s,
         unpluginContext,
         skipOverwrite: false,
       }
