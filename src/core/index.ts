@@ -206,8 +206,8 @@ export async function transformMacros({
                 return new Function(
                   `return (${source.slice(arg.start!, arg.end!)})`,
                 )()
-            } catch {}
-            throw new Error('Macro arguments cannot be resolved.')
+            } catch { }
+            console.warn('Macro arguments cannot be resolved.')
           })
 
           macros.push({

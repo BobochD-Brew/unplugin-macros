@@ -1,7 +1,7 @@
 import {
   src_default
-} from "./chunk-2LSZYTMV.js";
-import "./chunk-5GX7E2TN.js";
+} from "./chunk-NGQWJLYU.js";
+import "./chunk-JWDZLN5F.js";
 
 // src/webpack.ts
 var webpack_default = src_default.webpack;

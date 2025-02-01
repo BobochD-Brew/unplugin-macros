@@ -1,7 +1,7 @@
 import {
   src_default
-} from "./chunk-2LSZYTMV.js";
-import "./chunk-5GX7E2TN.js";
+} from "./chunk-NGQWJLYU.js";
+import "./chunk-JWDZLN5F.js";
 
 // src/vite.ts
 var vite_default = src_default.vite;
