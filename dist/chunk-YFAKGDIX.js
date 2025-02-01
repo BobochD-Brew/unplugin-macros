@@ -1,7 +1,7 @@
 import {
   resolveOptions,
   transformMacros
-} from "./chunk-JWDZLN5F.js";
+} from "./chunk-DCYTNARA.js";
 
 // src/index.ts
 import { createUnplugin } from "unplugin";
@@ -84,7 +84,8 @@ var plugin = createUnplugin((rawOptions = {}) => {
         getRunner,
         deps,
         attrs: options.attrs,
-        unpluginContext: this
+        unpluginContext: this,
+        meta: options.meta
       });
     },
     vite: {

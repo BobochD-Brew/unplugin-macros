@@ -1,7 +1,7 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { newObj[key] = obj[key]; } } } newObj.default = obj; return newObj; } } function _optionalChain(ops) { let lastAccessLHS = undefined; let value = ops[0]; let i = 1; while (i < ops.length) { const op = ops[i]; const fn = ops[i + 1]; i += 2; if ((op === 'optionalAccess' || op === 'optionalCall') && value == null) { return undefined; } if (op === 'access' || op === 'optionalAccess') { lastAccessLHS = value; value = fn(value); } else if (op === 'call' || op === 'optionalCall') { value = fn((...args) => value.call(lastAccessLHS, ...args)); lastAccessLHS = undefined; } } return value; }
 
 
-var _chunk7NOMKOGRcjs = require('./chunk-7NOMKOGR.cjs');
+var _chunkS4L7PJUUcjs = require('./chunk-S4L7PJUU.cjs');
 
 // src/index.ts
 var _unplugin = require('unplugin');
@@ -10,7 +10,7 @@ var _server = require('vite-node/server');
 var _client = require('vite-node/client');
 var _sourcemap = require('vite-node/source-map');
 var plugin = _unplugin.createUnplugin.call(void 0, (rawOptions = {}) => {
-  const options = _chunk7NOMKOGRcjs.resolveOptions.call(void 0, rawOptions);
+  const options = _chunkS4L7PJUUcjs.resolveOptions.call(void 0, rawOptions);
   const filter = _pluginutils.createFilter.call(void 0, options.include, options.exclude);
   let externalServer;
   let server;
@@ -78,13 +78,14 @@ var plugin = _unplugin.createUnplugin.call(void 0, (rawOptions = {}) => {
       return filter(id);
     },
     transform(source, id) {
-      return _chunk7NOMKOGRcjs.transformMacros.call(void 0, {
+      return _chunkS4L7PJUUcjs.transformMacros.call(void 0, {
         source,
         id,
         getRunner,
         deps,
         attrs: options.attrs,
-        unpluginContext: this
+        unpluginContext: this,
+        meta: options.meta
       });
     },
     vite: {

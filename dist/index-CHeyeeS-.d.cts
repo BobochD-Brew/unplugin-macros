@@ -43,6 +43,7 @@ interface Options {
      * @default { "type": "macro" }
      */
     attrs?: Record<string, string>;
+    meta?: Record<string, any>;
 }
 /**
  * Represents the resolved options for the plugin.
@@ -76,19 +77,21 @@ interface MacroContext {
      * This is an experimental feature and may be changed at any time.
      */
     unpluginContext: UnpluginBuildContext & UnpluginContext;
+    meta: Record<string, any>;
 }
 /**
  * Transforms macros in the given source code.
  * @param options - The transformation context options.
  * @returns The transformed code and source map, or undefined if no macros were found.
  */
-declare function transformMacros({ source, id, unpluginContext, getRunner, deps, attrs, }: {
+declare function transformMacros({ source, id, unpluginContext, getRunner, deps, attrs, meta }: {
     id: string;
     source: string;
     unpluginContext: UnpluginBuildContext & UnpluginContext;
     getRunner: () => Promise<ViteNodeRunner>;
     deps: Map<string, Set<string>>;
     attrs: Record<string, string>;
+    meta: Record<string, any>;
 }): Promise<{
     code: string;
     map: any;

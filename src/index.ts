@@ -112,6 +112,7 @@ const plugin: UnpluginInstance<Options | undefined, false> = createUnplugin<
         deps,
         attrs: options.attrs,
         unpluginContext: this,
+        meta: options.meta
       })
     },
 

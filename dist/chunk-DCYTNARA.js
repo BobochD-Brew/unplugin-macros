@@ -6,7 +6,8 @@ function resolveOptions(options) {
     viteServer: options.viteServer,
     viteConfig: options.viteConfig || {},
     enforce: "enforce" in options ? options.enforce : "pre",
-    attrs: options.attrs || { type: "macro" }
+    attrs: options.attrs || { type: "macro" },
+    meta: options.meta || {}
   };
 }
 
@@ -38,7 +39,8 @@ async function transformMacros({
   unpluginContext,
   getRunner,
   deps,
-  attrs
+  attrs,
+  meta
 }) {
   const program = babelParse(source, getLang(id), {
     plugins: [["importAttributes", { deprecatedAssertSyntax: true }]]
@@ -86,7 +88,8 @@ async function transformMacros({
         node,
         magicString: s,
         unpluginContext,
-        skipOverwrite: false
+        skipOverwrite: false,
+        meta
       };
       let ret;
       if (macro.type === "call") {

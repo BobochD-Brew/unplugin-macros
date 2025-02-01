@@ -43,6 +43,8 @@ export interface Options {
    * @default { "type": "macro" }
    */
   attrs?: Record<string, string>
+
+  meta?: Record<string, any>
 }
 
 /**
@@ -70,5 +72,6 @@ export function resolveOptions(options: Options): OptionsResolved {
     viteConfig: options.viteConfig || {},
     enforce: 'enforce' in options ? options.enforce : 'pre',
     attrs: options.attrs || { type: 'macro' },
+    meta: options.meta || {},
   }
 }

@@ -40,7 +40,8 @@ export interface MacroContext {
    *
    * This is an experimental feature and may be changed at any time.
    */
-  unpluginContext: UnpluginBuildContext & UnpluginContext
+  unpluginContext: UnpluginBuildContext & UnpluginContext,
+  meta: Record<string, any>
 }
 
 interface MacroBase {
@@ -69,6 +70,7 @@ export async function transformMacros({
   getRunner,
   deps,
   attrs,
+  meta
 }: {
   id: string
   source: string
@@ -77,6 +79,7 @@ export async function transformMacros({
   getRunner: () => Promise<ViteNodeRunner>
   deps: Map<string, Set<string>>
   attrs: Record<string, string>
+  meta: Record<string, any>
 }): Promise<{ code: string; map: any } | undefined> {
   const program = babelParse(source, getLang(id), {
     plugins: [['importAttributes', { deprecatedAssertSyntax: true }]],
@@ -136,6 +139,7 @@ export async function transformMacros({
         magicString: s,
         unpluginContext,
         skipOverwrite: false,
+        meta,
       }
       let ret: any
       if (macro.type === 'call') {
