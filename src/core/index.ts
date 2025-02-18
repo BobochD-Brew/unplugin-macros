@@ -18,7 +18,7 @@ import {
 } from 'ast-kit'
 import { MagicStringAST, generateTransform } from 'magic-string-ast'
 import type { UnpluginBuildContext, UnpluginContext } from 'unplugin'
-import type { ImportAttribute, Node, Program } from '@babel/types'
+import type { ImportAttribute, ImportDeclaration, Node, Program } from '@babel/types'
 import type { ViteNodeRunner } from 'vite-node/client'
 
 export * from './options'
@@ -258,8 +258,7 @@ export async function transformMacros({
       if (
         node.type === 'ImportDeclaration' &&
         node.importKind !== 'type' &&
-        node.attributes &&
-        checkImportAttributes(attrs, node.attributes)
+        ((node.attributes && checkImportAttributes(attrs, node.attributes)) || (node as ImportDeclaration)?.source?.value?.endsWith?.(".macro"))
       ) {
         s.removeNode(node)
         walkImportDeclaration(imports, node)

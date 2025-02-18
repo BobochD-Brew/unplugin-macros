@@ -1,17 +1,17 @@
-"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { newObj[key] = obj[key]; } } } newObj.default = obj; return newObj; } } function _optionalChain(ops) { let lastAccessLHS = undefined; let value = ops[0]; let i = 1; while (i < ops.length) { const op = ops[i]; const fn = ops[i + 1]; i += 2; if ((op === 'optionalAccess' || op === 'optionalCall') && value == null) { return undefined; } if (op === 'access' || op === 'optionalAccess') { lastAccessLHS = value; value = fn(value); } else if (op === 'call' || op === 'optionalCall') { value = fn((...args) => value.call(lastAccessLHS, ...args)); lastAccessLHS = undefined; } } return value; }
-
-
-var _chunkS4L7PJUUcjs = require('./chunk-S4L7PJUU.cjs');
+import {
+  resolveOptions,
+  transformMacros
+} from "./chunk-WIQDXI55.js";
 
 // src/index.ts
-var _unplugin = require('unplugin');
-var _pluginutils = require('@rollup/pluginutils');
-var _server = require('vite-node/server');
-var _client = require('vite-node/client');
-var _sourcemap = require('vite-node/source-map');
-var plugin = _unplugin.createUnplugin.call(void 0, (rawOptions = {}) => {
-  const options = _chunkS4L7PJUUcjs.resolveOptions.call(void 0, rawOptions);
-  const filter = _pluginutils.createFilter.call(void 0, options.include, options.exclude);
+import { createUnplugin } from "unplugin";
+import { createFilter } from "@rollup/pluginutils";
+import { ViteNodeServer } from "vite-node/server";
+import { ViteNodeRunner } from "vite-node/client";
+import { installSourcemapsSupport } from "vite-node/source-map";
+var plugin = createUnplugin((rawOptions = {}) => {
+  const options = resolveOptions(rawOptions);
+  const filter = createFilter(options.include, options.exclude);
   let externalServer;
   let server;
   let node;
@@ -32,7 +32,7 @@ var plugin = _unplugin.createUnplugin.call(void 0, (rawOptions = {}) => {
     })();
   }
   async function initServer() {
-    const { createServer } = await Promise.resolve().then(() => _interopRequireWildcard(require("vite")));
+    const { createServer } = await import("vite");
     const server2 = await createServer({
       ...options.viteConfig,
       optimizeDeps: {
@@ -44,11 +44,11 @@ var plugin = _unplugin.createUnplugin.call(void 0, (rawOptions = {}) => {
     return server2;
   }
   function initRunner() {
-    node = new (0, _server.ViteNodeServer)(server);
-    _sourcemap.installSourcemapsSupport.call(void 0, {
+    node = new ViteNodeServer(server);
+    installSourcemapsSupport({
       getSourceMap: (source) => node.getSourceMap(source)
     });
-    runner = new (0, _client.ViteNodeRunner)({
+    runner = new ViteNodeRunner({
       root: server.config.root,
       base: server.config.base,
       // when having the server and runner in a different context,
@@ -78,7 +78,7 @@ var plugin = _unplugin.createUnplugin.call(void 0, (rawOptions = {}) => {
       return filter(id);
     },
     transform(source, id) {
-      return _chunkS4L7PJUUcjs.transformMacros.call(void 0, {
+      return transformMacros({
         source,
         id,
         getRunner,
@@ -104,7 +104,7 @@ var plugin = _unplugin.createUnplugin.call(void 0, (rawOptions = {}) => {
         const affected = /* @__PURE__ */ new Set();
         for (const [id, macrosIds] of deps.entries()) {
           if (!macrosIds.has(file)) continue;
-          _optionalChain([server2, 'access', _ => _.moduleGraph, 'access', _2 => _2.getModulesByFile, 'call', _3 => _3(id), 'optionalAccess', _4 => _4.forEach, 'call', _5 => _5((m) => affected.add(m))]);
+          server2.moduleGraph.getModulesByFile(id)?.forEach((m) => affected.add(m));
         }
         return [...affected, ...modules];
       }
@@ -113,6 +113,6 @@ var plugin = _unplugin.createUnplugin.call(void 0, (rawOptions = {}) => {
 });
 var src_default = plugin;
 
-
-
-exports.src_default = src_default;
+export {
+  src_default
+};
