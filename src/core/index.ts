@@ -104,7 +104,6 @@ export async function transformMacros({
       const {
         node,
         id: [local, ...keys],
-        isAwait,
       } = macro
       const binding = imports.get(local)!
       const [, resolved] = await runner.resolveUrl(binding.source, id)
@@ -148,9 +147,12 @@ export async function transformMacros({
         ret = exported
       }
 
-      if (isAwait) {
-        ret = await ret
-      }
+      ret = await Promise.resolve(ret);
+      // if (isAwait) {
+      //   ret = await ret
+      // }
+
+
 
       switch (true) {
         case ctx.skipOverwrite: break;

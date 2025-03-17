@@ -1,10 +1,10 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});
 
-var _chunkBY4BU6VBcjs = require('./chunk-BY4BU6VB.cjs');
-require('./chunk-H5Q6NVZO.cjs');
+var _chunk6YDV56WDcjs = require('./chunk-6YDV56WD.cjs');
+require('./chunk-57WNXLCL.cjs');
 
 // src/webpack.ts
-var webpack_default = _chunkBY4BU6VBcjs.src_default.webpack;
+var webpack_default = _chunk6YDV56WDcjs.src_default.webpack;
 
 
 exports.default = webpack_default;
